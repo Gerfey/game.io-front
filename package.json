@@ -6,6 +6,7 @@
     "build": "webpack --mode=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production",
+    "heroku-prebuild": "npm install --dev",
     "watch": "webpack --watch",
     "serve": "webpack serve"
   },

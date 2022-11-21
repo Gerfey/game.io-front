@@ -12,11 +12,9 @@ function handleInput(x, y) {
 export function startCapturingInput() {
   window.addEventListener('mousemove', onMouseInput);
   window.addEventListener('touchstart', onMouseInput);
-  window.addEventListener('touchmove', onMouseInput);
 }
 
 export function stopCapturingInput() {
   window.removeEventListener('mousemove', onMouseInput);
   window.removeEventListener('touchstart', onMouseInput);
-  window.removeEventListener('touchmove', onMouseInput);
 }

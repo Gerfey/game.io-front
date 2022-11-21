@@ -15,8 +15,13 @@
   },
   "author": "Alexander Levchenkov",
   "license": "MIT",
+  "private": true,
   "bugs": {
     "url": "https://github.com/Gerfey/game.io-front/issues"
+  },
+  "engines": {
+    "node": "16.17.0",
+    "npm": "8.15.0"
   },
   "dependencies": {
     "dotenv": "^16.0.2",

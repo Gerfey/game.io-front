@@ -1,8 +1,6 @@
 import settings from './settings';
 
-const ASSET_NAMES = [
-    'background.jpg',
-];
+const ASSET_NAMES = [];
 
 const assets = {};
 

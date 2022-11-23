@@ -46,9 +46,7 @@ function renderBackground(player) {
 
     for (let i = 0; i < Math.round(MAP_SIZE / 50); i++) {
         for (let j = 0; j < Math.round(MAP_SIZE / 50); j++) {
-            context.strokeStyle = 'rgb(61,65,75)';
-            context.strokeRect(canvasX + 50 * i, canvasY + 50 * j, 50, 50);
-            context.fillRect(canvasX + 50 * i, canvasY + 50 * j, 50, 50);
+            context.fillRect(canvasX + 50 * i, canvasY + 50 * j, 49, 49);
         }
     }
 }
@@ -60,7 +58,7 @@ function renderBackgroundFirst() {
 
 function renderBorder(player) {
     if (!canvas || !context) return
-    context.strokeStyle = '#8F8D94'
+    context.strokeStyle = '#000000'
     context.lineWidth = 1
     context.strokeRect(canvas.width / 2 - player.x, canvas.height / 2 - player.y, MAP_SIZE, MAP_SIZE)
 }
@@ -81,7 +79,7 @@ function renderPlayer(me, player) {
     context.fill()
     context.closePath()
     context.lineWidth = 2
-    context.strokeStyle = '#2C2C2A'
+    context.strokeStyle = '#000000'
     context.stroke()
 
     context.restore()
@@ -92,9 +90,9 @@ function renderPlayer(me, player) {
     if (username) {
         context.fillText(username, canvasX - 30, canvasY - 20 - radius)
     }
-    context.fillStyle = '#8F8D94'
+    context.fillStyle = '#fff'
     context.font = 'italic 10pt Arial'
-    context.fillText(mass.toFixed(2), canvasX - 15, canvasY - radius)
+    context.fillText(mass.toFixed(2), canvasX - 15, canvasY - 5 - radius)
 }
 
 function renderFood(me, food) {
@@ -113,15 +111,15 @@ function renderFood(me, food) {
     context.fill()
     context.closePath()
     context.lineWidth = 1
-    context.strokeStyle = '#999999'
+    context.strokeStyle = '#000000'
     context.stroke()
 
     context.restore()
 
-    context.fillStyle = '#8F8D94'
+    context.fillStyle = '#fff'
     context.font = 'italic 10pt Arial'
 
-    context.fillText(mass.toFixed(2), canvasX - 15, canvasY - radius)
+    context.fillText(mass.toFixed(2), canvasX - 15, canvasY - 5 - radius)
 }
 
 function renderMainMenu() {

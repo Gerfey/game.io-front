@@ -4,6 +4,6 @@ base = "/"
 command = "npm run build"
 
 [[redirects]]
-from = "/*"
-to = "/index.html"
+from = "https://super-buttercream-7ce9ce.netlify.app/"
+to = "http://super-buttercream-7ce9ce.netlify.app/"
 status = 200

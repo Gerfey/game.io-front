@@ -1,13 +1,18 @@
-import {debounce} from 'throttle-debounce'
-import {getCurrentState} from './state'
+import { debounce } from 'throttle-debounce'
+import { getCurrentState } from './state'
 import settings from './settings'
 
-const {MAP_SIZE} = settings
+const { MAP_SIZE } = settings
 
-const canvas = document.getElementById('game-canvas')
-const context = canvas.getContext('2d')
+let canvas = null
+let context = null
 
-setCanvasDimensions()
+export function initCanvasElement() {
+    canvas = document.getElementById('game-canvas')
+    context = canvas.getContext('2d')
+
+    setCanvasDimensions()
+}
 
 function setCanvasDimensions() {
     const scaleRatio = Math.max(1, 800 / window.innerWidth)
@@ -21,14 +26,15 @@ window.addEventListener('resize', debounce(40, setCanvasDimensions))
 let animationFrameRequestId
 
 function render() {
-    const {me, others, foods} = getCurrentState()
-    if (me) {
-        renderBackground(me)
-        renderBorder(me)
+    const { player, otherPlayers, foods } = getCurrentState()
 
-        renderPlayer(me, me)
-        others.forEach(renderPlayer.bind(null, me));
-        foods.forEach(renderFood.bind(null, me));
+    if (player) {
+        renderBackground(player);
+        renderBorder(player);
+        renderPlayer(player, player);
+
+        otherPlayers.forEach(renderPlayer.bind(null, player));
+        foods.forEach(renderFood.bind(null, player));
     }
 
     animationFrameRequestId = requestAnimationFrame(render)
@@ -52,6 +58,8 @@ function renderBackground(player) {
 }
 
 function renderBackgroundFirst() {
+    if (!canvas || !context) return
+
     context.fillStyle = '#2b2f34'
     context.fillRect(0, 0, canvas.width, canvas.height)
 }
@@ -63,12 +71,21 @@ function renderBorder(player) {
     context.strokeRect(canvas.width / 2 - player.x, canvas.height / 2 - player.y, MAP_SIZE, MAP_SIZE)
 }
 
-function renderPlayer(me, player) {
+function renderPlayer(current, player) {
     if (!canvas || !context) return
-    const {x, y, username, color, radius, mass} = player
+    const { x, y, name, color, radius, mass } = player
 
-    const canvasX = canvas.width / 2 + x - me.x
-    const canvasY = canvas.height / 2 + y - me.y
+    let currentX = 0;
+    let currentY = 0;
+
+    if (current) {
+        currentX = current.x;
+        currentY = current.y;
+    }
+
+    const canvasX = canvas.width / 2 + x - currentX
+    const canvasY = canvas.height / 2 + y - currentY
+
 
     context.save()
     context.translate(canvasX, canvasY)
@@ -87,20 +104,28 @@ function renderPlayer(me, player) {
     context.fillStyle = color
     context.font = 'italic 14pt Arial'
 
-    if (username) {
-        context.fillText(username, canvasX - 30, canvasY - 20 - radius)
+    if (name) {
+        context.fillText(name, canvasX - 30, canvasY - 20 - radius)
     }
     context.fillStyle = '#fff'
     context.font = 'italic 10pt Arial'
     context.fillText(mass.toFixed(2), canvasX - 15, canvasY - 5 - radius)
 }
 
-function renderFood(me, food) {
+function renderFood(current, food) {
     if (!canvas || !context) return
-    const {x, y, color, radius, mass} = food
+    const { x, y, color, radius, mass } = food
 
-    const canvasX = canvas.width / 2 + x - me.x
-    const canvasY = canvas.height / 2 + y - me.y
+    let currentX = 0;
+    let currentY = 0;
+
+    if (current) {
+        currentX = current.x;
+        currentY = current.y;
+    }
+
+    const canvasX = canvas.width / 2 + x - currentX
+    const canvasY = canvas.height / 2 + y - currentY
 
     context.save()
     context.translate(canvasX, canvasY)
@@ -120,6 +145,7 @@ function renderFood(me, food) {
     context.font = 'italic 10pt Arial'
 
     context.fillText(mass.toFixed(2), canvasX - 15, canvasY - 5 - radius)
+
 }
 
 function renderMainMenu() {

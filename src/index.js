@@ -1,8 +1,8 @@
 import { connect, play } from './ws-connect.js';
-import { startRendering, stopRendering } from './render';
+import { initCanvasElement, startRendering, stopRendering } from './render';
 import { startCapturingInput, stopCapturingInput } from './input';
 import { initState } from './state';
-import { setLeaderboardHidden } from './leaderboard';
+import { initLeaderboardElement, setLeaderboardHidden } from './leaderboard';
 
 import '../public/css/bootstrap.css';
 import '../public/css/main.css';
@@ -10,6 +10,9 @@ import '../public/css/main.css';
 const playMenu = document.getElementById('play-menu');
 const playButton = document.getElementById('play-button');
 const usernameInput = document.getElementById('username-input');
+
+initCanvasElement()
+initLeaderboardElement()
 
 Promise.all([
   connect(onGameOver),

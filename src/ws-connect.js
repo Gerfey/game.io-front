@@ -4,8 +4,7 @@ import { processGameUpdate } from './state';
 
 import settings from './settings.js';
 
-const socketProtocol = (window.location.protocol.includes('https')) ? 'wss' : 'ws';
-const socket = io(`${socketProtocol}://${settings.GAME.HOST}`, { reconnection: false });
+const socket = io(`ws://${settings.GAME.HOST}`, { reconnection: false });
 const connectedPromise = new Promise(resolve => {
   socket.on('connect', () => {
     console.log('Connected to server!');
